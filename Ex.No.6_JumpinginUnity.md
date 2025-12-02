@@ -3,7 +3,7 @@
 ### AIM: 
 To write a program to simulate the process of jumping in Unity.
 ### Algorithm:
-```
+
 1. Create a new 3D Unity project
 2. Add a Plane
 3. Right-click Hierarchy → 3D Object → Plane → Rename to Ground
@@ -18,17 +18,18 @@ To write a program to simulate the process of jumping in Unity.
 Press Play
 Press Spacebar to jump
 Your cube should only jump when touching the ground
-```
+
 ###
 **Program **
-```
+
 using UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 {
     private Rigidbody rb;
     public float jumpForce = 5f;
-    
+    private bool isGrounded;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,22 +37,30 @@ public class PlayerJump : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) )
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            
+            isGrounded = false;
         }
     }
 
-   
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
 }
-```
+
 ### Output:
 
 
+<img width="1919" height="1079" alt="Screenshot 2025-09-02 145112" src="https://github.com/user-attachments/assets/086ad13d-7520-4c4a-8da4-a678b65ae16d" />
 
 
 
+<img width="1919" height="1018" alt="Screenshot 2025-09-02 145133" src="https://github.com/user-attachments/assets/6e5bc388-edca-49b0-855d-d5d8d6e71470" />
 
 
 
